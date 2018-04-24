@@ -1,0 +1,18 @@
+{
+  "name": "boilerplate-pure-node",
+  "version": "1.0.0",
+  "description": "A serverside of the boilerplate group using node with no framework",
+  "main": "src/main/app.js",
+  "scripts": {
+    "start": "node src/main/app.js",
+    "test": "mocha test"
+  },
+  "keywords": [
+    "node",
+    "boilerplate",
+    "js",
+    "ecma"
+  ],
+  "author": "Nick Fitton",
+  "license": "MIT"
+}
