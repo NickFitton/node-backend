@@ -15,3 +15,5 @@ The intention of this repository is to create a Node backend server that follows
 ## Dependencies
 * Babel
   * Babel has been used for functionality such as `import`.
+* uuid
+  * `uuid` has been used to generate a uuid for each created user.

@@ -25,7 +25,21 @@ function loadFile(path, response) {
   });
 }
 
+function returnNotFound(response) {
+  response.setHeader('Content-Type', 'text/html');
+  loadFile('./src/main/page/not_found.html', response);
+  response.statusCode = 404;
+}
+
+function returnJson(response, json, statusCode) {
+  response.statusCode = statusCode;
+  response.write(JSON.stringify(json));
+  response.end();
+}
+
 module.exports = {
   promiseRequestBody,
-  loadFile
+  loadFile,
+  returnNotFound,
+  returnJson,
 };

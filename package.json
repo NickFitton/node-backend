@@ -16,7 +16,9 @@
   "repository": "https://github.com/NickFitton/boilerplate-node-pure",
   "author": "Nick Fitton",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "uuid": "^3.2.1"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1"

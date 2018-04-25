@@ -1,5 +1,5 @@
 const http = require('http');
-const requestHandler = require('./requestHandling');
+const requestHandler = require('./api/requestHandling');
 
 const hostname = 'localhost';
 const port = 8080;
