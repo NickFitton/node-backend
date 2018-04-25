@@ -1,15 +1,22 @@
 import {
   promiseRequestBody,
+  returnBadRequest,
+  returnInternalServerError,
   returnJson,
   returnNotFound,
   returnNotImplemented,
 } from "../../util/requestUtils";
 import { User } from "../../service/model/user";
-import { promiseGetUsers, promiseInsertUser } from "../../service/postgres";
+import {
+  promiseGetUser,
+  promiseGetUsers,
+  promiseInsertUser
+} from "../../service/postgres";
 
 const uuidv4 = require('uuid/v4');
 const url = require('url');
 const md5 = require('md5');
+const validate = require('uuid-validate');
 
 async function usersHandler(request, response) {
   const path = url.parse(request.url).pathname;
@@ -32,20 +39,27 @@ async function usersHandler(request, response) {
       break;
     case path.includes('/users/'):
       const userId = path.split('/')[2];
-      console.log('User ID: ' + userId);
-      switch (request.method) {
-        case 'PUT':
-          returnNotImplemented(response);
-          break;
-        case 'DELETE':
-          returnNotImplemented(response);
-          break;
-        case 'GET':
-          returnNotImplemented(response);
-          break;
-        default:
-          returnNotFound(response);
-          break;
+      if (validate(userId)) {
+        switch (request.method) {
+          case 'PUT':
+            returnNotImplemented(response);
+            break;
+          case 'DELETE':
+            returnNotImplemented(response);
+            break;
+          case 'GET':
+            try {
+              returnJson(response, await getUser(userId), 200);
+            } catch (error) {
+              return returnInternalServerError(response, error.toString());
+            }
+            break;
+          default:
+            returnNotFound(response);
+            break;
+        }
+      } else {
+        returnBadRequest(response, "Given user ID was invalid.");
       }
       break;
     default:
@@ -69,13 +83,27 @@ async function getUsers() {
   let users = [];
   const retrievedUsers = await promiseGetUsers();
   retrievedUsers.forEach(retrievedUser => {
-    let user = new User(retrievedUser.first_name, retrievedUser.last_name, retrievedUser.email, undefined);
-    user.id = retrievedUser.id;
-    user.createdAt = new Date(retrievedUser.created_at).getTime();
-    user.updatedAt = new Date(retrievedUser.updated_at).getTime();
-    users.push(user);
+    users.push(retrievedUser);
   });
   return users;
+}
+
+async function getUser(userId) {
+  let retrievedUser = await promiseGetUser(userId).then(
+      result => {
+        return result;
+      }, error => {
+        throw error;
+      });
+  return userEntityToModel(retrievedUser);
+}
+
+function userEntityToModel(userEntity) {
+  let user = new User(userEntity.first_name, userEntity.last_name, userEntity.email, undefined);
+  user.id = userEntity.id;
+  user.createdAt = new Date(userEntity.created_at).getTime();
+  user.updatedAt = new Date(userEntity.updated_at).getTime();
+  return user;
 }
 
 module.exports = {

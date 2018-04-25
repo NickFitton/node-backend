@@ -34,7 +34,27 @@ async function promiseGetUsers() {
   });
 }
 
+async function promiseGetUser(userId) {
+  return new Promise((resolve, reject) => {
+    const pool = new Pool(config);
+    pool.query(`SELECT id, first_name, last_name, email, created_at, updated_at FROM users WHERE id='${userId}'`, (err, res) => {
+      if (err) {
+        console.error(err);
+      }
+      if (res === undefined) {
+        reject(new Error("Postgres failed, returned undefined"));
+      } else if (res.rows.length !== 1) {
+        reject(new Error(`User not found for uuid: ${userId}`));
+      } else {
+        resolve(res.rows[0]);
+      }
+      pool.end();
+    });
+  });
+}
+
 module.exports = {
   promiseInsertUser,
   promiseGetUsers,
+  promiseGetUser,
 };

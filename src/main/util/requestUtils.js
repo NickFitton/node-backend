@@ -36,6 +36,18 @@ function returnNotImplemented(response) {
   response.end();
 }
 
+function returnBadRequest(response, reason) {
+  response.statusCode = 400;
+  response.write(reason);
+  response.end();
+}
+
+function returnInternalServerError(response, reason) {
+  response.statusCode = 500;
+  response.write(reason);
+  response.end();
+}
+
 function returnJson(response, json, statusCode) {
   response.statusCode = statusCode;
   response.write(JSON.stringify(json));
@@ -48,4 +60,6 @@ module.exports = {
   returnNotFound,
   returnNotImplemented,
   returnJson,
+  returnBadRequest,
+  returnInternalServerError,
 };
