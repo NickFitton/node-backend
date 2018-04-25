@@ -2,7 +2,8 @@
 The intention of this repository is to create a Node backend server that follows the boilerplate guidlines without using a framework such as [express](http://expressjs.com/).
 
 ## TODO
-- [ ] Routing for user endpoints:
+- [x] Routing for user endpoints
+- [ ] Endpoint functionality
   - [ ] /users GET
   - [ ] /users POST
   - [ ] /users/{userId} GET
