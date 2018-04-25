@@ -4,7 +4,7 @@
   "description": "A serverside of the boilerplate group using node with no framework",
   "main": "src/main/app.js",
   "scripts": {
-    "start": "node src/main/app.js",
+    "start": "babel-node src/main/app.js",
     "test": "mocha test"
   },
   "keywords": [
@@ -13,6 +13,12 @@
     "js",
     "ecma"
   ],
+  "repository": "https://github.com/NickFitton/boilerplate-node-pure",
   "author": "Nick Fitton",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
 }

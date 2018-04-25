@@ -1,20 +1,21 @@
-const url = require('url');
-const fs = require('fs');
+require("babel-core").transform("code");
 
-function handleRequest(request, response) {
+const url = require('url');
+import { User } from './service/model/user';
+import { promiseRequestBody, loadFile } from './util/requestUtils';
+
+async function handleRequest(request, response) {
   const path = url.parse(request.url).pathname;
+  console.log(path);
 
   switch (path.split('/')[1]) {
-    case 'login':
-      response.setHeader('Content-Type', 'text/plain');
-      response.write('Login Here\n');
-      response.statusCode = 200;
-      response.end();
-      break;
-    case 'home':
-      response.setHeader('Content-Type', 'text/plain');
-      response.write('Home Page\n');
-      response.statusCode = 200;
+    case 'users':
+      let body = JSON.parse(await promiseRequestBody(request));
+      const newUser = new User(body.firstName, body.lastName, body.email, body.password);
+      newUser.createdAt = Date.now();
+      newUser.updatedAt = Date.now();
+      response.statusCode = 201;
+      response.write(JSON.stringify(newUser));
       response.end();
       break;
     default:
@@ -22,19 +23,6 @@ function handleRequest(request, response) {
       loadFile('./src/main/page/not_found.html', response);
       response.statusCode = 404;
   }
-}
-
-function loadFile(path, response) {
-  fs.readFile(path, null, function(error, data) {
-    if (error) {
-      console.log(error);
-      response.writeHead(404);
-      response.write('File not found!');
-    } else {
-      response.write(data);
-    }
-    response.end();
-  });
 }
 
 module.exports = {
