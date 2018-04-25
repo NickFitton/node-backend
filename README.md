@@ -4,8 +4,8 @@ The intention of this repository is to create a Node backend server that follows
 ## TODO
 - [x] Routing for user endpoints
 - [ ] Endpoint functionality:
-  - [ ] /users GET
-  - [ ] /users POST
+  - [x] /users GET
+  - [x] /users POST
   - [ ] /users/{userId} GET
   - [ ] /users/{userId} PUT
   - [ ] /users/{userId} DELETE
@@ -18,3 +18,7 @@ The intention of this repository is to create a Node backend server that follows
   * Babel has been used for functionality such as `import`.
 * uuid
   * `uuid` has been used to generate a uuid for each created user.
+* md5
+  * For hashing the users password on the database
+* pg
+  * For connecting to postgres

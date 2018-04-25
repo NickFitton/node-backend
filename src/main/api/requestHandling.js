@@ -3,6 +3,8 @@ require("babel-core").transform("code");
 import { usersHandler } from "./users/usersHandling";
 import { User } from '../service/model/user';
 import { promiseRequestBody, loadFile } from '../util/requestUtils';
+import { testConnection } from '../service/postgres';
+
 const url = require('url');
 
 async function handleRequest(request, response) {
@@ -15,8 +17,6 @@ async function handleRequest(request, response) {
     case 'test':
       let body = JSON.parse(await promiseRequestBody(request));
       const newUser = new User(body.firstName, body.lastName, body.email, body.password);
-      newUser.createdAt = Date.now();
-      newUser.updatedAt = Date.now();
       response.statusCode = 201;
       response.write(JSON.stringify(newUser));
       response.end();
