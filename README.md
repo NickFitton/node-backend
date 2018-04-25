@@ -1,5 +1,5 @@
 # Boilerplate Backend - NodeJS Pure
-The intention of this repository is to create a Node backend server that follows the boilerplate guidlines without using a framework such as [express](http://expressjs.com/).
+The intention of this repository is to create a Node backend server that follows the boilerplate guidelines without using a framework such as [express](http://expressjs.com/).
 
 ## Setup
 ### Postgres

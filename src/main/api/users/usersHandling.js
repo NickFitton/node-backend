@@ -1,24 +1,23 @@
+import uuidv4 from "uuid/v4";
+import url from "url";
+import md5 from "md5";
+import validate from "uuid-validate";
 import {
   promiseRequestBody,
   returnBadRequest,
   returnInternalServerError,
   returnJson,
   returnNotFound,
-  returnNotImplemented,
+  returnNotImplemented, returnPageNotFound,
 } from "../../util/requestUtils";
-import { User } from "../../service/model/user";
 import {
   promiseGetUser,
   promiseGetUsers,
   promiseInsertUser
 } from "../../service/postgres";
+import { User } from "../../service/model/user";
 
-const uuidv4 = require('uuid/v4');
-const url = require('url');
-const md5 = require('md5');
-const validate = require('uuid-validate');
-
-async function usersHandler(request, response) {
+export async function usersHandler(request, response) {
   const path = url.parse(request.url).pathname;
 
   // Because JS switches don't support multiple expressions, I had to use embedded switches
@@ -33,7 +32,7 @@ async function usersHandler(request, response) {
           returnJson(response, await getUsers(), 200);
           break;
         default:
-          returnNotFound(response);
+          returnPageNotFound(response);
           break;
       }
       break;
@@ -59,7 +58,7 @@ async function usersHandler(request, response) {
             }
             break;
           default:
-            returnNotFound(response);
+            returnPageNotFound(response);
             break;
         }
       } else {
@@ -67,7 +66,7 @@ async function usersHandler(request, response) {
       }
       break;
     default:
-      returnNotFound(response);
+      returnPageNotFound(response);
       break;
   }
 }
@@ -110,6 +109,3 @@ function userEntityToModel(userEntity) {
   return user;
 }
 
-module.exports = {
-  usersHandler
-};
