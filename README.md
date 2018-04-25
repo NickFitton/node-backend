@@ -1,6 +1,16 @@
 # Boilerplate Backend - NodeJS Pure
 The intention of this repository is to create a Node backend server that follows the boilerplate guidlines without using a framework such as [express](http://expressjs.com/).
 
+## Setup
+### Postgres
+Postgres is needed for running the service successfully and sending info to the database.
+
+### Packages
+Run `npm install` to gather all the dependencies.
+
+### Startup
+To start up the service run `npm start`.
+
 ## TODO
 - [x] Routing for user endpoints
 - [ ] Endpoint functionality:
