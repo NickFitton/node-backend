@@ -3,7 +3,7 @@ The intention of this repository is to create a Node backend server that follows
 
 ## TODO
 - [x] Routing for user endpoints
-- [ ] Endpoint functionality
+- [ ] Endpoint functionality:
   - [ ] /users GET
   - [ ] /users POST
   - [ ] /users/{userId} GET
