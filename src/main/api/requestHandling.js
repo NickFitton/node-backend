@@ -1,13 +1,9 @@
-require("babel-core").transform("code");
-
-import { usersHandler } from "./users/usersHandling";
+import url from 'url';
 import { User } from '../service/model/user';
-import { promiseRequestBody, loadFile } from '../util/requestUtils';
-import { testConnection } from '../service/postgres';
+import { promiseRequestBody, returnPageNotFound } from '../util/requestUtils';
+import { usersHandler } from './users/usersHandling';
 
-const url = require('url');
-
-async function handleRequest(request, response) {
+export async function handleRequest(request, response) {
   const path = url.parse(request.url).pathname;
 
   switch (path.split('/')[1]) {
@@ -22,12 +18,6 @@ async function handleRequest(request, response) {
       response.end();
       break;
     default:
-      response.setHeader('Content-Type', 'text/html');
-      loadFile('./src/main/page/not_found.html', response);
-      response.statusCode = 404;
+      returnPageNotFound(response);
   }
 }
-
-module.exports = {
-  handleRequest
-};

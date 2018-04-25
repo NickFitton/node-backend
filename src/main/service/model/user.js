@@ -1,5 +1,5 @@
-function User(firstName, lastName, email, password) {
-  this.id = "";
+export function User(firstName, lastName, email, password) {
+  this.id = '';
   this.firstName = firstName;
   this.lastName = lastName;
   this.email = email;
@@ -7,7 +7,3 @@ function User(firstName, lastName, email, password) {
   this.createdAt = 0;
   this.updatedAt = 0;
 }
-
-module.exports = {
-  User
-};

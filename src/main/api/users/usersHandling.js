@@ -1,3 +1,9 @@
+import md5 from 'md5';
+import url from 'url';
+import validate from 'uuid-validate';
+import uuidv4 from 'uuid/v4';
+import { User } from '../../service/model/user';
+import { promiseGetUser, promiseGetUsers, promiseInsertUser } from '../../service/postgres';
 import {
   promiseRequestBody,
   returnBadRequest,
@@ -5,20 +11,10 @@ import {
   returnJson,
   returnNotFound,
   returnNotImplemented,
-} from "../../util/requestUtils";
-import { User } from "../../service/model/user";
-import {
-  promiseGetUser,
-  promiseGetUsers,
-  promiseInsertUser
-} from "../../service/postgres";
+  returnPageNotFound,
+} from '../../util/requestUtils';
 
-const uuidv4 = require('uuid/v4');
-const url = require('url');
-const md5 = require('md5');
-const validate = require('uuid-validate');
-
-async function usersHandler(request, response) {
+export async function usersHandler(request, response) {
   const path = url.parse(request.url).pathname;
 
   // Because JS switches don't support multiple expressions, I had to use embedded switches
@@ -33,7 +29,7 @@ async function usersHandler(request, response) {
           returnJson(response, await getUsers(), 200);
           break;
         default:
-          returnNotFound(response);
+          returnPageNotFound(response);
           break;
       }
       break;
@@ -51,7 +47,7 @@ async function usersHandler(request, response) {
             try {
               returnJson(response, await getUser(userId), 200);
             } catch (error) {
-              if (error.toString().includes("not found")) {
+              if (error.toString().includes('not found')) {
                 return returnNotFound(response, error.toString());
               } else {
                 return returnInternalServerError(response, error.toString());
@@ -59,15 +55,15 @@ async function usersHandler(request, response) {
             }
             break;
           default:
-            returnNotFound(response);
+            returnPageNotFound(response);
             break;
         }
       } else {
-        returnBadRequest(response, "Given user ID was invalid.");
+        returnBadRequest(response, 'Given user ID was invalid.');
       }
       break;
     default:
-      returnNotFound(response);
+      returnPageNotFound(response);
       break;
   }
 }
@@ -110,6 +106,3 @@ function userEntityToModel(userEntity) {
   return user;
 }
 
-module.exports = {
-  usersHandler
-};

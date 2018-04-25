@@ -1,11 +1,11 @@
-const http = require('http');
-const requestHandler = require('./api/requestHandling');
+import http from 'http';
+import { handleRequest } from './api/requestHandling';
 
 const hostname = 'localhost';
 const port = 8080;
 
-const server = http.createServer(requestHandler.handleRequest);
+const server = http.createServer(handleRequest);
 
 server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`Server running at http://${hostname}:${port}/`);
 });

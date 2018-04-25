@@ -1,4 +1,5 @@
-const {Pool, Client} = require('pg');
+import { Pool } from 'pg';
+
 
 const config = {
   user: 'boilerplate_user',
@@ -8,7 +9,7 @@ const config = {
   port: '5432',
 };
 
-async function promiseInsertUser(user) {
+export async function promiseInsertUser(user) {
   return new Promise(resolve => {
     const pool = new Pool(config);
     pool.query(`INSERT INTO users (id, first_name, last_name, email, password) VALUES (\'${user.id}\', \'${user.firstName}\', \'${user.lastName}\', \'${user.email}\', \'${user.password}\') RETURNING *`, (err, res) => {
@@ -21,7 +22,7 @@ async function promiseInsertUser(user) {
   });
 }
 
-async function promiseGetUsers() {
+export async function promiseGetUsers() {
   return new Promise(resolve => {
     const pool = new Pool(config);
     pool.query(`SELECT id, first_name, last_name, email, created_at, updated_at FROM users`, (err, res) => {
@@ -34,7 +35,7 @@ async function promiseGetUsers() {
   });
 }
 
-async function promiseGetUser(userId) {
+export async function promiseGetUser(userId) {
   return new Promise((resolve, reject) => {
     const pool = new Pool(config);
     pool.query(`SELECT id, first_name, last_name, email, created_at, updated_at FROM users WHERE id='${userId}'`, (err, res) => {
@@ -42,7 +43,7 @@ async function promiseGetUser(userId) {
         console.error(err);
       }
       if (res === undefined) {
-        reject(new Error("Postgres failed, returned undefined"));
+        reject(new Error('Postgres failed, returned undefined'));
       } else if (res.rows.length !== 1) {
         reject(new Error(`User not found for uuid: ${userId}`));
       } else {
@@ -52,9 +53,3 @@ async function promiseGetUser(userId) {
     });
   });
 }
-
-module.exports = {
-  promiseInsertUser,
-  promiseGetUsers,
-  promiseGetUser,
-};
