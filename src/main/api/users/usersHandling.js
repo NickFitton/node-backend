@@ -51,7 +51,11 @@ async function usersHandler(request, response) {
             try {
               returnJson(response, await getUser(userId), 200);
             } catch (error) {
-              return returnInternalServerError(response, error.toString());
+              if (error.toString().includes("not found")) {
+                return returnNotFound(response, error.toString());
+              } else {
+                return returnInternalServerError(response, error.toString());
+              }
             }
             break;
           default:
@@ -83,7 +87,7 @@ async function getUsers() {
   let users = [];
   const retrievedUsers = await promiseGetUsers();
   retrievedUsers.forEach(retrievedUser => {
-    users.push(retrievedUser);
+    users.push(userEntityToModel(retrievedUser));
   });
   return users;
 }
