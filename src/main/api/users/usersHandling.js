@@ -1,4 +1,9 @@
-import { promiseRequestBody, returnJson, returnNotFound } from "../../util/requestUtils";
+import {
+  promiseRequestBody,
+  returnJson,
+  returnNotFound,
+  returnNotImplemented,
+} from "../../util/requestUtils";
 import { User } from "../../service/model/user";
 
 const uuidv4 = require('uuid/v4');
@@ -16,8 +21,7 @@ async function usersHandler(request, response) {
           returnJson(response, createUser(body), 201);
           break;
         case 'GET':
-          response.statusCode = 501;
-          response.end();
+          returnNotImplemented(response);
           break;
         default:
           returnNotFound(response);
@@ -27,6 +31,20 @@ async function usersHandler(request, response) {
     case path.includes('/users/'):
       const userId = path.split('/')[2];
       console.log('User ID: ' + userId);
+      switch (request.method) {
+        case 'PUT':
+          returnNotImplemented(response);
+          break;
+        case 'DELETE':
+          returnNotImplemented(response);
+          break;
+        case 'GET':
+          returnNotImplemented(response);
+          break;
+        default:
+          returnNotFound(response);
+          break;
+      }
       break;
     default:
       returnNotFound(response);
