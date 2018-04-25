@@ -16,7 +16,7 @@ To start up the service run `npm start`.
 - [ ] Endpoint functionality:
   - [x] /users GET
   - [x] /users POST
-  - [ ] /users/{userId} GET
+  - [x] /users/{userId} GET
   - [ ] /users/{userId} PUT
   - [ ] /users/{userId} DELETE
 - [ ] Database connection
@@ -28,6 +28,8 @@ To start up the service run `npm start`.
   * Babel has been used for functionality such as `import`.
 * uuid
   * `uuid` has been used to generate a uuid for each created user.
+* uuid-validate
+  * Used to verify the validity of given user id's.
 * md5
   * For hashing the users password on the database
 * pg

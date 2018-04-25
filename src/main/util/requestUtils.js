@@ -25,14 +25,32 @@ function loadFile(path, response) {
   });
 }
 
-function returnNotFound(response) {
+function returnPageNotFound(response) {
   response.setHeader('Content-Type', 'text/html');
   loadFile('./src/main/page/not_found.html', response);
   response.statusCode = 404;
 }
 
+function returnNotFound(response, reason) {
+  response.statusCode = 404;
+  response.write(reason);
+  response.end();
+}
+
 function returnNotImplemented(response) {
   response.statusCode = 501;
+  response.end();
+}
+
+function returnBadRequest(response, reason) {
+  response.statusCode = 400;
+  response.write(reason);
+  response.end();
+}
+
+function returnInternalServerError(response, reason) {
+  response.statusCode = 500;
+  response.write(reason);
   response.end();
 }
 
@@ -46,6 +64,9 @@ module.exports = {
   promiseRequestBody,
   loadFile,
   returnNotFound,
+  returnPageNotFound,
   returnNotImplemented,
   returnJson,
+  returnBadRequest,
+  returnInternalServerError,
 };
