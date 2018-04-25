@@ -16,7 +16,7 @@ To start up the service run `npm start`.
 - [ ] Endpoint functionality:
   - [x] /users GET
   - [x] /users POST
-  - [ ] /users/{userId} GET
+  - [x] /users/{userId} GET
   - [ ] /users/{userId} PUT
   - [ ] /users/{userId} DELETE
 - [ ] Database connection
