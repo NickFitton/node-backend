@@ -1,5 +1,5 @@
-import http from "http";
-import { handleRequest } from "./api/requestHandling";
+import http from 'http';
+import { handleRequest } from './api/requestHandling';
 
 const hostname = 'localhost';
 const port = 8080;

@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import { Pool } from 'pg';
 
 
 const config = {
@@ -43,7 +43,7 @@ export async function promiseGetUser(userId) {
         console.error(err);
       }
       if (res === undefined) {
-        reject(new Error("Postgres failed, returned undefined"));
+        reject(new Error('Postgres failed, returned undefined'));
       } else if (res.rows.length !== 1) {
         reject(new Error(`User not found for uuid: ${userId}`));
       } else {

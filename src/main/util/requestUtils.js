@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 
 export function promiseRequestBody(request) {
   return new Promise(resolve => {

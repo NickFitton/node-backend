@@ -1,21 +1,18 @@
-import uuidv4 from "uuid/v4";
-import url from "url";
-import md5 from "md5";
-import validate from "uuid-validate";
+import md5 from 'md5';
+import url from 'url';
+import validate from 'uuid-validate';
+import uuidv4 from 'uuid/v4';
+import { User } from '../../service/model/user';
+import { promiseGetUser, promiseGetUsers, promiseInsertUser } from '../../service/postgres';
 import {
   promiseRequestBody,
   returnBadRequest,
   returnInternalServerError,
   returnJson,
   returnNotFound,
-  returnNotImplemented, returnPageNotFound,
-} from "../../util/requestUtils";
-import {
-  promiseGetUser,
-  promiseGetUsers,
-  promiseInsertUser
-} from "../../service/postgres";
-import { User } from "../../service/model/user";
+  returnNotImplemented,
+  returnPageNotFound,
+} from '../../util/requestUtils';
 
 export async function usersHandler(request, response) {
   const path = url.parse(request.url).pathname;
@@ -50,7 +47,7 @@ export async function usersHandler(request, response) {
             try {
               returnJson(response, await getUser(userId), 200);
             } catch (error) {
-              if (error.toString().includes("not found")) {
+              if (error.toString().includes('not found')) {
                 return returnNotFound(response, error.toString());
               } else {
                 return returnInternalServerError(response, error.toString());
@@ -62,7 +59,7 @@ export async function usersHandler(request, response) {
             break;
         }
       } else {
-        returnBadRequest(response, "Given user ID was invalid.");
+        returnBadRequest(response, 'Given user ID was invalid.');
       }
       break;
     default:

@@ -1,7 +1,7 @@
-import { usersHandler } from "./users/usersHandling";
+import url from 'url';
 import { User } from '../service/model/user';
 import { promiseRequestBody, returnPageNotFound } from '../util/requestUtils';
-import url from "url";
+import { usersHandler } from './users/usersHandling';
 
 export async function handleRequest(request, response) {
   const path = url.parse(request.url).pathname;
