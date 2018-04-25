@@ -66,16 +66,15 @@ async function createUser(body) {
 }
 
 async function getUsers() {
-  const retrievedUsers = await promiseGetUsers();
   let users = [];
-  for (let i=0; i<retrievedUsers.length; i++) {
-    console.log(retrievedUsers[i]);
-    let user = new User(retrievedUsers[i].first_name, retrievedUsers[i].last_name, retrievedUsers[i].email, undefined);
-    user.id = retrievedUsers[i].id;
-    user.createdAt = new Date(retrievedUsers[i].created_at).getTime();
-    user.updatedAt = new Date(retrievedUsers[i].updated_at).getTime();
+  const retrievedUsers = await promiseGetUsers();
+  retrievedUsers.forEach(retrievedUser => {
+    let user = new User(retrievedUser.first_name, retrievedUser.last_name, retrievedUser.email, undefined);
+    user.id = retrievedUser.id;
+    user.createdAt = new Date(retrievedUser.created_at).getTime();
+    user.updatedAt = new Date(retrievedUser.updated_at).getTime();
     users.push(user);
-  }
+  });
   return users;
 }
 
