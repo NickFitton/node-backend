@@ -31,6 +31,11 @@ function returnNotFound(response) {
   response.statusCode = 404;
 }
 
+function returnNotImplemented(response) {
+  response.statusCode = 501;
+  response.end();
+}
+
 function returnJson(response, json, statusCode) {
   response.statusCode = statusCode;
   response.write(JSON.stringify(json));
@@ -41,5 +46,6 @@ module.exports = {
   promiseRequestBody,
   loadFile,
   returnNotFound,
+  returnNotImplemented,
   returnJson,
 };
